@@ -2,7 +2,7 @@
 
 -import(p05,[reverse/1]).
 
--export([duplicate/1]).
+-export([duplicate/1, duplicateR/1]).
 
 duplicate([])-> [];
 duplicate(H) -> duplicate(H, []).

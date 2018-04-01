@@ -35,7 +35,7 @@ lookup_old() ->
 	
 	MS = ets:fun2ms(fun({Key, _, Timeout, Time_Insert}) 
 						when Timeout =< (Time_Current - Time_Insert)->
-				   Key end),
+					Key end),
 	ets:select(?CACHE_NAME, MS).
 
 
@@ -66,27 +66,27 @@ insert_test_() -> [
 	?_assert(ok =:= my_cache:insert(1, 1, ?TIMEOUT)),
 	?_assert(ok =:= my_cache:insert(2, 2, ?TIMEOUT)),
 	?_assert(ok =:= my_cache:insert(3, 3, ?TIMEOUT)),
-    ?_assert({bad_timeout, "600"} =:= my_cache:insert(1, 1, "600"))
+	?_assert({bad_timeout, "600"} =:= my_cache:insert(1, 1, "600"))
 	].
 
 lookup_test_() -> [
 	?_assertEqual({ok, 1}, my_cache:lookup(1)),
 	?_assertEqual({ok, 2}, my_cache:lookup(2)),
-    ?_assertEqual({ok, 3}, my_cache:lookup(3)),
-    ?_assertEqual({empty}, my_cache:lookup(4))
+	?_assertEqual({ok, 3}, my_cache:lookup(3)),
+	?_assertEqual({empty}, my_cache:lookup(4))
 	].
 
 slow_test_() ->
 	{timeout, ?TIMEOUT + 10,
-    fun() ->
-    	timer:sleep(?TIMEOUT * 1000 + 1000)
+	fun() ->
+		timer:sleep(?TIMEOUT * 1000 + 1000)
 	end}.
 
 lookup1_test_() -> [   
 	?_assertEqual({empty}, my_cache:lookup(1)),
 	?_assertEqual({empty}, my_cache:lookup(2)),
-    ?_assertEqual({empty}, my_cache:lookup(3)),
-    ?_assertEqual({empty}, my_cache:lookup(4)),	
+	?_assertEqual({empty}, my_cache:lookup(3)),
+	?_assertEqual({empty}, my_cache:lookup(4)),	
 	?_assertEqual(ok, my_cache:insert(1, 1, ?TIMEOUT)),
 	?_assertEqual({ok, 1}, my_cache:lookup(1))
 	].
